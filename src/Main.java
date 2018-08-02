@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.Canvas;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import java.util.Random;
 
 public class Main extends Canvas implements Runnable{
     public static final String TITLE = "Moja gra platformowa";
@@ -9,6 +12,9 @@ public class Main extends Canvas implements Runnable{
 
     private boolean RUNNING = false;
     private JFrame frame;
+
+    private BufferedImage image = new BufferedImage(128, 64, BufferedImage.TYPE_INT_RGB);
+    private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
 
     public Main(){
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -24,6 +30,12 @@ public class Main extends Canvas implements Runnable{
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
+
+        Random r = new Random();
+
+        for( int i = 0; i < 128*64; i++){
+            pixels[i] = r.nextInt(0x00D0FF);
+        }
     }
 
     public void start(){
@@ -64,6 +76,8 @@ public class Main extends Canvas implements Runnable{
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0,0,WIDTH + 10, HEIGHT + 10);
+
+        g.drawImage(image,0,0,WIDTH,HEIGHT,null);
 
         g.dispose();
         bs.show();
