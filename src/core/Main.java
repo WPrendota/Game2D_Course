@@ -1,3 +1,7 @@
+package core;
+
+import graphics.Screen;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Canvas;
@@ -12,6 +16,8 @@ public class Main extends Canvas implements Runnable{
 
     private boolean RUNNING = false;
     private JFrame frame;
+
+    private Screen screen;
 
     private BufferedImage image = new BufferedImage(128, 64, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -31,11 +37,7 @@ public class Main extends Canvas implements Runnable{
         frame.setResizable(false);
         frame.setVisible(true);
 
-        Random r = new Random();
-
-        for( int i = 0; i < 128*64; i++){
-            pixels[i] = r.nextInt(0x00D0FF);
-        }
+        screen = new Screen(128,64);
     }
 
     public void start(){
@@ -77,7 +79,10 @@ public class Main extends Canvas implements Runnable{
         g.setColor(Color.BLACK);
         g.fillRect(0,0,WIDTH + 10, HEIGHT + 10);
 
-        g.drawImage(image,0,0,WIDTH,HEIGHT,null);
+        screen.clear(0x000000);
+        screen.frect(40, 1, 50, 50, 0xff00ff);
+
+        g.drawImage(screen.getImage(),0,0,WIDTH,HEIGHT,null);
 
         g.dispose();
         bs.show();
