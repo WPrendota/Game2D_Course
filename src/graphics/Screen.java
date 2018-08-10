@@ -31,7 +31,7 @@ public class Screen {
     public void frect(int px, int py, int w, int h, int color){
         for(int y = 0; y < h;  y++){
             for(int x = 0; x < w; x++){
-                pixel(x + px, y + py,color);
+                pixel(x + px, y + py, color);
             }
         }
     }

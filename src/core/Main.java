@@ -13,6 +13,7 @@ import java.util.Random;
 public class Main extends Canvas implements Runnable{
     public static final String TITLE = "Moja gra platformowa";
     public static final int WIDTH = 800, HEIGHT = 600;
+    private static final int FRAMERATE = 60;
 
     private boolean RUNNING = false;
     private JFrame frame;
@@ -47,12 +48,38 @@ public class Main extends Canvas implements Runnable{
         new Thread(this, "Game " + TITLE).start();
     }
 
+    private double timerek = System.currentTimeMillis();  //Pobranie aktualnego czasu w milisekundach
+    private int FPS = 0;
+    private int UPS = 0;
+    private double delta;
+    private double frametime = 1000000000 / FRAMERATE;
+    private long timeNOW = System.nanoTime();
+    private long timeLAST = System.nanoTime();
 
     @Override
     public void run() {
         while(RUNNING){
-            update();
+            timeNOW = System.nanoTime();
+            delta += (timeNOW - timeLAST) / frametime;
+            timeLAST = timeNOW;
+
+            while(delta >= 1){
+                update();
+                delta -= 1;
+                UPS++;
+            }
+
             render();
+            FPS++;
+
+            // Shows number of frames per second:
+            if(System.currentTimeMillis() - timerek >= 1000){
+                timerek = System.currentTimeMillis();
+                System.out.println("FPS: " + FPS + ", UPS: " + UPS);
+                FPS = 0;
+                UPS = 0;
+            }
+            //
         }
         stop();
     }
@@ -65,7 +92,7 @@ public class Main extends Canvas implements Runnable{
     }
 
     private void update(){
-        System.out.println("Petla");
+        //System.out.println("Petla");
     }
 
     private void render(){
