@@ -3,10 +3,12 @@ package core;
 import graphics.Screen;
 import graphics.Sprite;
 import graphics.Spritesheet;
+import input.Keyboard;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Canvas;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -21,6 +23,9 @@ public class Main extends Canvas implements Runnable{
     private JFrame frame;
 
     private Screen screen;
+    private Keyboard keyboard = new Keyboard();
+
+    int x = 40,y = 40;
 
     public static final Sprite s = new Sprite(0,0,16,Spritesheet.def1);
 
@@ -33,6 +38,7 @@ public class Main extends Canvas implements Runnable{
         setMaximumSize(new Dimension(WIDTH,HEIGHT));
         frame = new JFrame(TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addKeyListener(new Keyboard());
 
         frame.add(this, new BorderLayout().CENTER);
 
@@ -41,7 +47,6 @@ public class Main extends Canvas implements Runnable{
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
-        //int img_number = 12;
 
         screen = new Screen(128,64);
     }
@@ -97,7 +102,24 @@ public class Main extends Canvas implements Runnable{
     }
 
     private void update(){
-        //System.out.println("Petla");
+        keyboard.update();
+        float speed = 1f;
+
+        if(Keyboard.getKey(KeyEvent.VK_W)){
+            y -= speed;
+        }
+
+        if(Keyboard.getKey(KeyEvent.VK_S)){
+            y += speed;
+        }
+
+        if(Keyboard.getKey(KeyEvent.VK_A)){
+            x -= speed;
+        }
+
+        if(Keyboard.getKey(KeyEvent.VK_D)){
+            x += speed;
+        }
     }
 
     private void render(){
@@ -114,7 +136,9 @@ public class Main extends Canvas implements Runnable{
         screen.clear(0x000000);
         screen.frect(40, 1, 50, 50, 0xff00ff);
 
-        screen.renderSprite(40, 40, s);
+        //TU
+
+        screen.renderSprite(x, y, s);
 
         g.drawImage(screen.getImage(),0,0,WIDTH,HEIGHT,null);
 
