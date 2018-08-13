@@ -28,6 +28,14 @@ public class Screen {
         return image;
     }
 
+    public void renderSprite(int px, int py, Sprite s){
+        for(int y = 0; y < s.size;  y++){
+            for(int x = 0; x < s.size; x++){
+                pixel(px + x, py + y, s.sp.pixels[(s.x * s.size) + x + ((s.y * s.size) + y * s.sp.WIDTH)]);
+            }
+        }
+    }
+
     public void frect(int px, int py, int w, int h, int color){
         for(int y = 0; y < h;  y++){
             for(int x = 0; x < w; x++){
@@ -38,7 +46,7 @@ public class Screen {
 
     private void pixel(int x, int y, int color){
         if(x < 0 || x >= WIDTH) return;
-        if(y < 0 || y >= HEIGHT) return;
+        if(y < 0 || y >= HEIGHT || color == 0xFF00FF) return;
 
         pixels[x + y * WIDTH] = color;
     }

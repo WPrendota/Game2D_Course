@@ -1,6 +1,8 @@
 package core;
 
 import graphics.Screen;
+import graphics.Sprite;
+import graphics.Spritesheet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,8 +10,8 @@ import java.awt.Canvas;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
-import java.util.Random;
 
+import java.util.Random;
 public class Main extends Canvas implements Runnable{
     public static final String TITLE = "Moja gra platformowa";
     public static final int WIDTH = 800, HEIGHT = 600;
@@ -19,6 +21,8 @@ public class Main extends Canvas implements Runnable{
     private JFrame frame;
 
     private Screen screen;
+
+    public static final Sprite s = new Sprite(0,0,16,Spritesheet.def1);
 
     private BufferedImage image = new BufferedImage(128, 64, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -37,6 +41,7 @@ public class Main extends Canvas implements Runnable{
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setVisible(true);
+        //int img_number = 12;
 
         screen = new Screen(128,64);
     }
@@ -75,7 +80,7 @@ public class Main extends Canvas implements Runnable{
             // Shows number of frames per second:
             if(System.currentTimeMillis() - timerek >= 1000){
                 timerek = System.currentTimeMillis();
-                System.out.println("FPS: " + FPS + ", UPS: " + UPS);
+                //System.out.println("FPS: " + FPS + ", UPS: " + UPS);
                 FPS = 0;
                 UPS = 0;
             }
@@ -108,6 +113,8 @@ public class Main extends Canvas implements Runnable{
 
         screen.clear(0x000000);
         screen.frect(40, 1, 50, 50, 0xff00ff);
+
+        screen.renderSprite(40, 40, s);
 
         g.drawImage(screen.getImage(),0,0,WIDTH,HEIGHT,null);
 
