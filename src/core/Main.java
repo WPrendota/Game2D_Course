@@ -24,10 +24,7 @@ public class Main extends Canvas implements Runnable{
 
     private Screen screen;
     private Keyboard keyboard = new Keyboard();
-
-    int x = 40,y = 40;
-
-    public static final Sprite s = new Sprite(0,0,16,Spritesheet.def1);
+    private GameStateManager gsm;
 
     private BufferedImage image = new BufferedImage(128, 64, BufferedImage.TYPE_INT_RGB);
     private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -49,6 +46,8 @@ public class Main extends Canvas implements Runnable{
         frame.setVisible(true);
 
         screen = new Screen(128,64);
+
+        gsm = new GameStateManager();
     }
 
     public void start(){
@@ -86,6 +85,7 @@ public class Main extends Canvas implements Runnable{
             if(System.currentTimeMillis() - timerek >= 1000){
                 timerek = System.currentTimeMillis();
                 //System.out.println("FPS: " + FPS + ", UPS: " + UPS);
+                frame.setTitle("FPS: " + FPS + ", UPS: " + UPS);
                 FPS = 0;
                 UPS = 0;
             }
@@ -103,23 +103,8 @@ public class Main extends Canvas implements Runnable{
 
     private void update(){
         keyboard.update();
-        float speed = 1f;
 
-        if(Keyboard.getKey(KeyEvent.VK_W)){
-            y -= speed;
-        }
-
-        if(Keyboard.getKey(KeyEvent.VK_S)){
-            y += speed;
-        }
-
-        if(Keyboard.getKey(KeyEvent.VK_A)){
-            x -= speed;
-        }
-
-        if(Keyboard.getKey(KeyEvent.VK_D)){
-            x += speed;
-        }
+        gsm.update();
     }
 
     private void render(){
@@ -136,9 +121,7 @@ public class Main extends Canvas implements Runnable{
         screen.clear(0x000000);
         screen.frect(40, 1, 50, 50, 0xff00ff);
 
-        //TU
-
-        screen.renderSprite(x, y, s);
+        gsm.render(screen);
 
         g.drawImage(screen.getImage(),0,0,WIDTH,HEIGHT,null);
 
