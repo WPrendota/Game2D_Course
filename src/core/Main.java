@@ -67,7 +67,7 @@ public class Main extends Canvas implements Runnable{
 
     @Override
     public void run() {
-        while(RUNNING){
+        while(RUNNING && !gsm.exit){
             timeNOW = System.nanoTime();
             delta += (timeNOW - timeLAST) / frametime;
             timeLAST = timeNOW;
@@ -119,7 +119,7 @@ public class Main extends Canvas implements Runnable{
         g.fillRect(0,0,WIDTH + 10, HEIGHT + 10);
 
         screen.clear(0x000000);
-        screen.frect(40, 1, 50, 50, 0xff00ff);
+        //screen.frect(40, 1, 50, 50, 0xff00ff);
 
         gsm.render(screen);
 

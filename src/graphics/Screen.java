@@ -29,9 +29,9 @@ public class Screen {
     }
 
     public void renderSprite(int px, int py, Sprite s){
-        for(int y = 0; y < s.size;  y++){
-            for(int x = 0; x < s.size; x++){
-                pixel(px + x, py + y, s.sp.pixels[(s.x * s.size) + x + ((s.y * s.size) + y * s.sp.WIDTH)]);
+        for(int y = 0; y < s.height;  y++){
+            for(int x = 0; x < s.width; x++){
+                pixel(px + x, py + y, s.sp.pixels[s.x + x + (s.y + y) * s.sp.WIDTH]);
             }
         }
     }
@@ -45,8 +45,7 @@ public class Screen {
     }
 
     private void pixel(int x, int y, int color){
-        if(x < 0 || x >= WIDTH) return;
-        if(y < 0 || y >= HEIGHT || color == 0xFF00FF) return;
+        if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT || color == 0xFFFE00FF || color == 0xFF000000) return;
 
         pixels[x + y * WIDTH] = color;
     }

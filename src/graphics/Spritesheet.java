@@ -9,6 +9,7 @@ public class Spritesheet {
     // Table of images, which are cut during rendering process.
 
     public static final Spritesheet  def1 = new Spritesheet("C:\\Users\\Witek\\IdeaProjects\\Game\\res\\spritsheet.png");
+    public static final Spritesheet  bg_menu = new Spritesheet("C:\\Users\\Witek\\IdeaProjects\\Game\\res\\bg_menu.png");
     //public static final Spritesheet  def1 = new Spritesheet("res/spritsheet.png");
 
     public int WIDTH, HEIGHT;

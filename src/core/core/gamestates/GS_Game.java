@@ -41,6 +41,6 @@ public class GS_Game extends GameState{
     public void render(Screen s){
         s.clear(0x0000ff);
 
-        s.renderSprite(x, y, this.s);
+        s.renderSprite((int)x, (int)y, this.s);
     }
 }
