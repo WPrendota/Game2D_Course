@@ -66,12 +66,13 @@ public class GS_Menu extends GameState{
         }
     }
 
-    private void setPointer(int i){
+    private void setPointer(int i) {
         pointerPosition += (i - pointerPosition);
     }
 
     public void render(Screen s){
         s.clear(0x000000);
+        
         s.renderSprite(0,0, s_bg);
         s.renderSprite(65,0, s_logo);
         s.renderSprite(0,0, s_newGame);
